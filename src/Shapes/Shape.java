@@ -1,6 +1,6 @@
 package Shapes;
 
-import Records.Dimention;
+import Data.Dimention;
 import Visuals.Panel;
 
 import java.awt.*;

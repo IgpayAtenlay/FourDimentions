@@ -1,6 +1,6 @@
 package Visuals;
 
-import Records.Dimention;
+import Data.Dimention;
 
 public class Eye {
     public Dimention location;

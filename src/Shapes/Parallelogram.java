@@ -1,14 +1,14 @@
 package Shapes;
 
-import Records.Dimention;
+import Data.Dimention;
 import Visuals.Panel;
 
 import java.awt.*;
 
 public class Parallelogram extends Shape {
-    public Dimention cornerOne;
-    public Dimention cornerTwo;
-    public Dimention cornerThree;
+    private Dimention cornerOne;
+    private Dimention cornerTwo;
+    private Dimention cornerThree;
 
     public Parallelogram(Dimention cornerOne, Dimention cornerTwo, Dimention cornerThree) {
         this.cornerOne = cornerOne;
@@ -30,7 +30,7 @@ public class Parallelogram extends Shape {
         Graphics2D g2 = (Graphics2D) g;
         int[] xPoints = {(int) modifiedOne.x(), (int) modifiedTwo.x(), (int) modifiedThree.x(), (int) modifiedFour.x()};
         int[] yPoints = {(int) modifiedOne.y(), (int) modifiedTwo.y(), (int) modifiedThree.y(), (int) modifiedFour.y()};
-        g2.fillPolygon(xPoints, yPoints, xPoints.length);
+        g2.drawPolygon(xPoints, yPoints, xPoints.length);
     }
 
     public void move(int distance, Dimention direction) {

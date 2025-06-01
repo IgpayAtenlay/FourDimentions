@@ -1,6 +1,6 @@
 package Visuals;
 
-import Records.Dimention;
+import Data.Dimention;
 import Shapes.Shape;
 
 import javax.swing.*;
@@ -58,9 +58,7 @@ public class Panel extends JPanel {
         repaint();
     }
     public Dimention modifyCoordinates(Dimention dimention) {
-        System.out.println(dimention);
         Dimention result = eye.modifyCoordinates(dimention);
-        System.out.println(result);
         return new Dimention(result.x() + (double) getWidth() / 2, result.y() * -1 + (double) getHeight() / 2, result.z(), result.w());
     }
 }

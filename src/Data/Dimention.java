@@ -1,4 +1,4 @@
-package Records;
+package Data;
 
 public record Dimention(double x, double y, double z, double w) {
     public double distance() {
