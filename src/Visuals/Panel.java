@@ -20,11 +20,11 @@ public class Panel extends JPanel {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawLine(getWidth() / 2 - CROSSHAIR_LENGTH / 2, getHeight() / 2, getWidth() / 2 + CROSSHAIR_LENGTH / 2, getHeight() / 2);
-        g.drawLine(getWidth() / 2, getHeight() / 2 - CROSSHAIR_LENGTH / 2, getWidth() / 2, getHeight() / 2 + CROSSHAIR_LENGTH / 2);
         for(Shape shape : shapes) {
             shape.draw(g, this);
         }
+        g.drawLine(getWidth() / 2 - CROSSHAIR_LENGTH / 2, getHeight() / 2, getWidth() / 2 + CROSSHAIR_LENGTH / 2, getHeight() / 2);
+        g.drawLine(getWidth() / 2, getHeight() / 2 - CROSSHAIR_LENGTH / 2, getWidth() / 2, getHeight() / 2 + CROSSHAIR_LENGTH / 2);
     }
     public void add(Shape shape) {
         shapes.add(shape);
@@ -49,10 +49,10 @@ public class Panel extends JPanel {
             shapes.get(0).move(SPEED / 2, new Dimention(0, 0, -1, 0));
         }
         if (Keys.isKeyPressed(KeyEvent.VK_J) && shapes.size() > 0) {
-            shapes.get(0).move(SPEED, new Dimention(0, 0, 0, -1));
+            shapes.get(0).move(SPEED / 4, new Dimention(0, 0, 0, -1));
         }
         if (Keys.isKeyPressed(KeyEvent.VK_L) && shapes.size() > 0) {
-            shapes.get(0).move(SPEED, new Dimention(0, 0, 0, 1));
+            shapes.get(0).move(SPEED / 4, new Dimention(0, 0, 0, 1));
         }
 
         repaint();
@@ -60,5 +60,8 @@ public class Panel extends JPanel {
     public Dimention modifyCoordinates(Dimention dimention) {
         Dimention result = eye.modifyCoordinates(dimention);
         return new Dimention(result.x() + (double) getWidth() / 2, result.y() * -1 + (double) getHeight() / 2, result.z(), result.w());
+    }
+    public Eye getEye() {
+        return eye;
     }
 }

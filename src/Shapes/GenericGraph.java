@@ -17,7 +17,9 @@ public class GenericGraph extends Shape {
             Dimention modifiedStart = panel.modifyCoordinates(start);
             for (Dimention end : edges.getEdges().get(start)) {
                 Dimention modifiedEnd = panel.modifyCoordinates(end);
-                g.drawLine((int) modifiedStart.x(), (int) modifiedStart.y(), (int) modifiedEnd.x(), (int) modifiedEnd.y());
+                if (modifiedStart.isVisible() && modifiedEnd.isVisible()) {
+                    g.drawLine((int) modifiedStart.x(), (int) modifiedStart.y(), (int) modifiedEnd.x(), (int) modifiedEnd.y());
+                }
             }
         }
     }

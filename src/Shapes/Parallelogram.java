@@ -27,10 +27,12 @@ public class Parallelogram extends Shape {
         Dimention modifiedThree = panel.modifyCoordinates(cornerThree);
         Dimention modifiedFour = panel.modifyCoordinates(cornerFour);
 
-        Graphics2D g2 = (Graphics2D) g;
-        int[] xPoints = {(int) modifiedOne.x(), (int) modifiedTwo.x(), (int) modifiedThree.x(), (int) modifiedFour.x()};
-        int[] yPoints = {(int) modifiedOne.y(), (int) modifiedTwo.y(), (int) modifiedThree.y(), (int) modifiedFour.y()};
-        g2.drawPolygon(xPoints, yPoints, xPoints.length);
+        if (modifiedOne.isVisible() && modifiedTwo.isVisible() && modifiedThree.isVisible() && modifiedFour.isVisible()) {
+            Graphics2D g2 = (Graphics2D) g;
+            int[] xPoints = {(int) modifiedOne.x(), (int) modifiedTwo.x(), (int) modifiedThree.x(), (int) modifiedFour.x()};
+            int[] yPoints = {(int) modifiedOne.y(), (int) modifiedTwo.y(), (int) modifiedThree.y(), (int) modifiedFour.y()};
+            g2.drawPolygon(xPoints, yPoints, xPoints.length);
+        }
     }
 
     public void move(int distance, Dimention direction) {

@@ -17,7 +17,9 @@ public class Point extends Shape {
 
     public void draw(Graphics g, Panel panel) {
         Dimention modifiedCoordinates = panel.modifyCoordinates(location);
-        g.fillOval((int) (modifiedCoordinates.x() - POINT_SIZE / 2), (int) (modifiedCoordinates.y() - POINT_SIZE / 2), POINT_SIZE, POINT_SIZE);
+        if (modifiedCoordinates.isVisible()) {
+            g.fillOval((int) (modifiedCoordinates.x() - POINT_SIZE / 2), (int) (modifiedCoordinates.y() - POINT_SIZE / 2), POINT_SIZE, POINT_SIZE);
+        }
     }
     public void move(int distance, Dimention direction) {
         this.location = location.move(distance, direction);
