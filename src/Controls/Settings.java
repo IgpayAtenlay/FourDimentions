@@ -5,7 +5,7 @@ public class Settings {
     private static double blurRange = 100;
     private static double gradientRange = 5;
     private static int horizontalSpeed = 50;
-    private static int forwardsSpeed = 5;
+    private static int forwardsSpeed = 50;
     private static int anaSpeed = 5;
 
     public static double getSolidRange() {

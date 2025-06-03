@@ -15,6 +15,9 @@ public record Dimention(double x, double y, double z, double w) {
                 w + direction.w() * distance / direction.distance()
         );
     }
+    public Dimention move(Dimention start, Dimention end) {
+        return move((int) start.distance(end), start.direction(end));
+    }
     public Dimention direction(Dimention end) {
         return new Dimention(end.x - x, end.y - y, end.z - z, end.w - w);
     }

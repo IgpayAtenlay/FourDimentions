@@ -1,9 +1,8 @@
 package Controls;
 
 import Data.Dimention;
-import Entities.Mesh;
 import Entities.Entity;
-import Scenes.Rectangle;
+import Entities.Mesh;
 import Scenes.Scene;
 import Visuals.Frame;
 
@@ -15,8 +14,8 @@ public class Control {
     private static Entity focus;
     private static Frame frame;
 
-    public static void initialize() {
-        scene = new Rectangle();
+    public static void initialize(Scene scene) {
+        Control.scene = scene;
         focus = scene.getEye();
         frame = new Frame();
         Timer timer = new Timer(1, e -> {

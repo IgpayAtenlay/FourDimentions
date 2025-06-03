@@ -9,7 +9,7 @@ public class Eye extends Entity {
     public Eye() {
         location = new Dimention(0, 0, 0, 0);
         direction = new Dimention(0, 0, 0, 0);
-        displayRelativePosition = new Dimention(0, 0, 10, 0);
+        displayRelativePosition = new Dimention(0, 0, 700, 0);
     }
     public Dimention modifyCoordinates(Dimention dimention) {
         // move camera to 0,0,0,0
