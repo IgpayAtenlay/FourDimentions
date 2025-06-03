@@ -5,6 +5,7 @@ import Controls.Settings;
 import Data.Dimention;
 import Entities.Mesh;
 import Entities.Triangle;
+import Util.ColorValues;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,7 +15,6 @@ public class ZBuffer extends JPanel {
     private static int CROSSHAIR_LENGTH = 12;
     private LinkedListColor[][] zBuffer;
     private BufferedImage image;
-    private static final Color background = Color.WHITE;
 
     public ZBuffer() {
         super();
@@ -57,13 +57,12 @@ public class ZBuffer extends JPanel {
                     double z = u * cornerOne.z() + v * cornerTwo.z() + baryW * cornerThree.z();
                     if (z > 0) {
                         double w = u * cornerOne.w() + v * cornerTwo.w() + baryW * cornerThree.w();
-                        zBuffer[x][y].add(z, getColor(w));
+                        zBuffer[x][y].add(z, getColor(new Dimention(x, y, z, w)));
                     }
                 }
             }
         }
     }
-
     // Compute barycentric coordinates
     private double[] baryCoords(int pointX, int pointY, Dimention one, Dimention two, Dimention three) {
         double determinant = ((two.y() - three.y())*(one.x() - three.x()) + (three.x() - two.x())*(one.y() - three.y()));
@@ -92,7 +91,7 @@ public class ZBuffer extends JPanel {
         clearImage();
         for (int x = 0; x < zBuffer.length; x++) {
             for (int y = 0; y < zBuffer[x].length; y++) {
-                Color blendedColor = background;
+                Color blendedColor = Settings.getBackground();
                 for (Color color : zBuffer[x][y]) {
                     int red = (int) (blendedColor.getRed() * ((double)(255 - color.getAlpha()) / 255) + color.getRed() * ((double)(color.getAlpha()) / 255));
                     int green = (int) (blendedColor.getGreen() * ((double)(255 - color.getAlpha()) / 255) + color.getGreen() * ((double)(color.getAlpha()) / 255));
@@ -117,30 +116,38 @@ public class ZBuffer extends JPanel {
         Dimention result = Control.getScene().getEye().modifyCoordinates(dimention);
         return new Dimention(result.x() + (double) getWidth() / 2, result.y() * -1 + (double) getHeight() / 2, result.z(), result.w());
     }
-    public Color getColor(double w) {
-        double absW = Math.abs(w);
-        boolean pos = w >= 0;
+    public Color getColor(Dimention dimention) {
+        double absW = Math.abs(dimention.w());
+        double absZ = Math.abs(dimention.z());
+        boolean pos = dimention.w() >= 0;
 
         int blurValue = 0;
         if (absW <= Settings.getBlurRange() / 2) {
             blurValue = (int) ((1 - absW / (Settings.getBlurRange() / 2)) * 255);
         }
+        int zBlur = 0;
+        if (absZ <= Settings.getBlurRange() / 2) {
+            zBlur = (int) ((1 - absZ / (Settings.getBlurRange() / 2)) * 255);
+        }
 
+        Color baseColor;
         if (absW <= Settings.getSolidRange() / 2) {
-            return new Color(0, 0, 0, blurValue);
+            baseColor = new Color(0, 0, 0, blurValue);
         } else if (absW <= Settings.getSolidRange() / 2 + Settings.getGradientRange()) {
             int value = (int) ((absW - Settings.getSolidRange() / 2) / Settings.getGradientRange() * 255);
             if (pos) {
-                return new Color(value, 0, 0, blurValue);
+                baseColor = new Color(value, 0, 0, blurValue);
             } else {
-                return new Color(0, 0, value, blurValue);
+                baseColor = new Color(0, 0, value, blurValue);
             }
         } else {
             if (pos) {
-                return new Color(255, 0, 0, blurValue);
+                baseColor = new Color(255, 0, 0, blurValue);
             } else {
-                return new Color(0, 0, 255, blurValue);
+                baseColor = new Color(0, 0, 255, blurValue);
             }
         }
+
+        return ColorValues.blendColors(Settings.getBackground(), baseColor, zBlur);
     }
 }

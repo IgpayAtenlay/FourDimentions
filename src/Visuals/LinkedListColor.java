@@ -31,40 +31,40 @@ public class LinkedListColor implements Iterable<Color> {
             head = new Node(z, color, null, null);
             tail = head;
             size++;
-            return;
         } else if (z <= head.z) {
             if (color.getAlpha() == 255) {
                 head = new Node(z, color, null, null);
+                tail = head;
                 size = 1;
             } else {
                 head = new Node(z, color, head, null);
                 head.next.previous = head;
                 size++;
             }
-            return;
-        }
-        int numCurrentNode = 1;
-        Node currentNode = head;
-        while (currentNode.next != null) {
-            if (z <= currentNode.next.z) {
-                if (color.getAlpha() == 255) {
-                    currentNode.next = new Node(z, color, null, currentNode);
-                    tail = currentNode.next;
-                    size = numCurrentNode + 1;
-                } else {
-                    currentNode.next = new Node(z, color, currentNode.next, currentNode);
-                    currentNode.next.next.previous = currentNode.next;
-                    size++;
+        } else {
+            int numCurrentNode = 1;
+            Node currentNode = head;
+            while (currentNode.next != null) {
+                if (z <= currentNode.next.z) {
+                    if (color.getAlpha() == 255) {
+                        currentNode.next = new Node(z, color, null, currentNode);
+                        tail = currentNode.next;
+                        size = numCurrentNode + 1;
+                    } else {
+                        currentNode.next = new Node(z, color, currentNode.next, currentNode);
+                        currentNode.next.next.previous = currentNode.next;
+                        size++;
+                    }
+                    return;
                 }
-                return;
+                currentNode = currentNode.next;
+                numCurrentNode++;
             }
-            currentNode = currentNode.next;
-            numCurrentNode++;
-        }
-        if (currentNode.color.getAlpha() != 255) {
-            currentNode.next = new Node(z, color, null, currentNode);
-            tail = currentNode.next;
-            size++;
+            if (currentNode.color.getAlpha() != 255) {
+                currentNode.next = new Node(z, color, null, currentNode);
+                tail = currentNode.next;
+                size++;
+            }
         }
     }
     public boolean isEmpty() {
