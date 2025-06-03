@@ -57,7 +57,7 @@ public class ZBuffer extends JPanel {
                     double z = u * cornerOne.z() + v * cornerTwo.z() + baryW * cornerThree.z();
                     if (z > 0) {
                         double w = u * cornerOne.w() + v * cornerTwo.w() + baryW * cornerThree.w();
-                        zBuffer[x][y].add(z, getColor(new Dimention(x, y, z, w)));
+                        zBuffer[x][y].add(z, w, getColor(new Dimention(x, y, z, w)));
                     }
                 }
             }

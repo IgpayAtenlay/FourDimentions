@@ -8,14 +8,27 @@ import java.util.function.Consumer;
 public class LinkedListColor implements Iterable<Color> {
     private class Node {
         double z;
+        double w;
         Color color;
         Node next;
         Node previous;
-        private Node(double z, Color color, Node next, Node previous) {
+        private Node(double z, double w, Color color, Node next, Node previous) {
             this.z = z;
+            this.w = w;
             this.color = color;
             this.next = next;
             this.previous = previous;
+        }
+
+        public boolean hasPrio(double z, double w) {
+//            if (Math.abs(this.w) < Math.abs(w)) {
+//                return true;
+//            } else if (Math.abs(this.w) > Math.abs(w)) {
+//                return false;
+//            } else {
+//                return Math.abs(this.z) <= Math.abs(z);
+//            }
+            return Math.sqrt(this.z * this.z + this.w * this.w) <= Math.sqrt(z * z + w * w);
         }
     }
     // smallest
@@ -26,18 +39,18 @@ public class LinkedListColor implements Iterable<Color> {
     public LinkedListColor() {
         size = 0;
     }
-    public void add(double z, Color color) {
+    public void add(double z, double w, Color color) {
         if (isEmpty()) {
-            head = new Node(z, color, null, null);
+            head = new Node(z, w, color, null, null);
             tail = head;
             size++;
-        } else if (z <= head.z) {
+        } else if (head.hasPrio(z, w)) {
             if (color.getAlpha() == 255) {
-                head = new Node(z, color, null, null);
+                head = new Node(z, w, color, null, null);
                 tail = head;
                 size = 1;
             } else {
-                head = new Node(z, color, head, null);
+                head = new Node(z, w, color, head, null);
                 head.next.previous = head;
                 size++;
             }
@@ -45,13 +58,13 @@ public class LinkedListColor implements Iterable<Color> {
             int numCurrentNode = 1;
             Node currentNode = head;
             while (currentNode.next != null) {
-                if (z <= currentNode.next.z) {
+                if (currentNode.next.hasPrio(z, w)) {
                     if (color.getAlpha() == 255) {
-                        currentNode.next = new Node(z, color, null, currentNode);
+                        currentNode.next = new Node(z, w, color, null, currentNode);
                         tail = currentNode.next;
                         size = numCurrentNode + 1;
                     } else {
-                        currentNode.next = new Node(z, color, currentNode.next, currentNode);
+                        currentNode.next = new Node(z, w, color, currentNode.next, currentNode);
                         currentNode.next.next.previous = currentNode.next;
                         size++;
                     }
@@ -61,7 +74,7 @@ public class LinkedListColor implements Iterable<Color> {
                 numCurrentNode++;
             }
             if (currentNode.color.getAlpha() != 255) {
-                currentNode.next = new Node(z, color, null, currentNode);
+                currentNode.next = new Node(z, w, color, null, currentNode);
                 tail = currentNode.next;
                 size++;
             }
