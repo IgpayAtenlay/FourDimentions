@@ -2,7 +2,7 @@ package Entities;
 
 import Data.Dimention;
 
-public class TriangularPyramidMesh extends Mesh4D {
+public class TriangularPyramidMesh extends Mesh {
     public TriangularPyramidMesh(Dimention start, int sideLength) {
         super();
         Dimention one = start.move(sideLength, new Dimention(1, 0,0 , 0));

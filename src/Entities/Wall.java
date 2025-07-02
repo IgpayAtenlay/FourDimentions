@@ -5,16 +5,16 @@ import Data.Dimention;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Tesseract extends Mesh {
-    public Tesseract(Dimention start, int sideLength) {
+public class Wall extends Mesh {
+    public Wall(Dimention start, double xLength, double yLength, double zLength, double wLength) {
         super();
 
         // generate all vertices
         ArrayList<Dimention> dimentions = new ArrayList<>();
-        for (double x : new double[]{start.x(), start.x() + sideLength}) {
-            for (double y : new double[]{start.y(), start.y() + sideLength}) {
-                for (double z : new double[]{start.z(), start.z() + sideLength}) {
-                    for (double w : new double[]{start.w(), start.w() + sideLength}) {
+        for (double x : new double[]{start.x(), start.x() + xLength}) {
+            for (double y : new double[]{start.y(), start.y() + yLength}) {
+                for (double z : new double[]{start.z(), start.z() + zLength}) {
+                    for (double w : new double[]{start.w(), start.w() + wLength}) {
                         dimentions.add(new Dimention(x, y, z, w));
                     }
                 }
@@ -23,21 +23,21 @@ public class Tesseract extends Mesh {
         System.out.println(dimentions.size());
 
         // generate all cubes
-        ArrayList<Cube> cubes = new ArrayList<>();
+        ArrayList<RectangularPrism> rectangularPrisms = new ArrayList<>();
         for (int i = 0; i < dimentions.size(); i++) {
             for (int j = i + 1; j < dimentions.size(); j++) {
                 for (int k = j + 1; k < dimentions.size(); k++) {
                     for (int l = k + 1; l < dimentions.size(); l++) {
-                        Cube cube = createWithTesting(dimentions.get(i), dimentions.get(j), dimentions.get(k), dimentions.get(l));
-                        if (cube != null) {
+                        RectangularPrism rectangularPrism = createWithTesting(dimentions.get(i), dimentions.get(j), dimentions.get(k), dimentions.get(l));
+                        if (rectangularPrism != null) {
                             boolean sameCube = false;
-                            for (Cube cube1 : cubes) {
-                                if (cube1.sameCube(cube)) {
+                            for (RectangularPrism rectangularPrism1 : rectangularPrisms) {
+                                if (rectangularPrism1.sameCube(rectangularPrism)) {
                                     sameCube = true;
                                 }
                             }
                             if (!sameCube) {
-                                cubes.add(cube);
+                                rectangularPrisms.add(rectangularPrism);
                             }
                         }
                     }
@@ -45,17 +45,17 @@ public class Tesseract extends Mesh {
             }
         }
 
-        for (Cube cube : cubes) {
-            addRectangularPrism(cube.dimentions[0], cube.dimentions[1], cube.dimentions[2], cube.dimentions[3]);
-            System.out.println(cube);
+        for (RectangularPrism rectangularPrism : rectangularPrisms) {
+            addRectangularPrism(rectangularPrism.dimentions[0], rectangularPrism.dimentions[1], rectangularPrism.dimentions[2], rectangularPrism.dimentions[3]);
+            System.out.println(rectangularPrism);
         }
-        System.out.println(cubes.size());
+        System.out.println(rectangularPrisms.size());
     }
-    private class Cube {
+    private class RectangularPrism {
         private Dimention[] dimentions;
         private Dimention min;
         private Dimention max;
-        private Cube(Dimention... corners) {
+        private RectangularPrism(Dimention... corners) {
             dimentions = corners;
             Dimention min = dimentions[0];
             Dimention max = dimentions[0];
@@ -77,14 +77,14 @@ public class Tesseract extends Mesh {
             }
         }
 
-        private boolean sameCube(Cube cube) {
-            return min.equals(cube.min) && max.equals(cube.max);
+        private boolean sameCube(RectangularPrism rectangularPrism) {
+            return min.equals(rectangularPrism.min) && max.equals(rectangularPrism.max);
         }
         public String toString() {
             return Arrays.toString(dimentions);
         }
     }
-    private Cube createWithTesting(Dimention... dimentions) {
+    private RectangularPrism createWithTesting(Dimention... dimentions) {
         if (dimentions.length != 4) {
             return null;
         }
@@ -114,7 +114,7 @@ public class Tesseract extends Mesh {
         dimentions[middleIndex] = dimentions[0];
         dimentions[0] = temp;
 
-        return new Cube(dimentions[0], dimentions[1], dimentions[2], dimentions[3]);
+        return new RectangularPrism(dimentions[0], dimentions[1], dimentions[2], dimentions[3]);
     }
     private static boolean threeCoordsMatching(Dimention one, Dimention two) {
         int numSharedAspects = 0;

@@ -3,9 +3,11 @@ package Visuals;
 import Controls.Control;
 import Controls.Settings;
 import Data.Dimention;
-import Entities.Mesh4D;
+import Entities.Mesh;
 import Entities.TriangularPyramid;
 import Util.ColorValues;
+import Util.Distance;
+import Util.Vector;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +30,7 @@ public class ZBuffer extends JPanel {
     }
     private void updateZBuffer() {
         clearZBuffer();
-        for (Mesh4D shape : Control.getScene().getShapes()) {
+        for (Mesh shape : Control.getScene().getShapes()) {
             for (TriangularPyramid triangularPyramid : shape.mesh) {
                 rasterizeTriangularPyramid(triangularPyramid);
             }
@@ -87,14 +89,28 @@ public class ZBuffer extends JPanel {
                     }
                 }
                 if (!intersections.isEmpty()) {
-                    Dimention closest = intersections.get(0);
-                    for (Dimention current : intersections) {
-                        if (current.distance() < closest.distance()) {
-                            closest = current;
+                    Dimention closestPoint;
+                    if (intersections.size() == 2) {
+                        Vector vector = Distance.closestPoint(new Vector(intersections.get(0).z(), intersections.get(0).w()), new Vector(intersections.get(1).z(), intersections.get(1).w()));
+                        closestPoint = new Dimention(x, y, vector.x(), vector.y());
+                    } else if (intersections.size() == 1) {
+                        closestPoint = intersections.get(0);
+                    } else {
+                        Dimention closest = intersections.get(0);
+                        Dimention farthest = intersections.get(0);
+                        for (Dimention current : intersections) {
+                            if (current.isCloser(closest)) {
+                                closest = current;
+                            }
+                            if (farthest.isCloser(current)) {
+                                farthest = current;
+                            }
                         }
+                        Vector vector = Distance.closestPoint(new Vector(closest.z(), closest.w()), new Vector(farthest.z(), farthest.w()));
+                        closestPoint = new Dimention(x, y, vector.x(), vector.y());
                     }
-                    if (zBuffer[x][y] == null || zBuffer[x][y].distance() > closest.distance()) {
-                        zBuffer[x][y] = closest;
+                    if (zBuffer[x][y] == null || closestPoint.isCloser(zBuffer[x][y])) {
+                        zBuffer[x][y] = closestPoint;
                     }
                 }
             }

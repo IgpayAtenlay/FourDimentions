@@ -1,8 +1,8 @@
 import Controls.Control;
-import Scenes.TriangularPyramid;
+import Scenes.Wall;
 
 public class Main {
     public static void main(String[] args) {
-        Control.initialize(new TriangularPyramid());
+        Control.initialize(new Wall());
     }
 }

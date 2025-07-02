@@ -2,7 +2,10 @@ package Data;
 
 public record Dimention(double x, double y, double z, double w) {
     public double distance() {
-        return Math.sqrt(x*x + y*y + z*z + w*w);
+        return Math.sqrt(distanceSquared());
+    }
+    public double distanceSquared() {
+        return x*x + y*y + z*z + w*w;
     }
     public double distance(Dimention dimention) {
         return new Dimention(this.x - dimention.x, this.y - dimention.y, this.z - dimention.z, this.w - dimention.w).distance();
@@ -20,6 +23,9 @@ public record Dimention(double x, double y, double z, double w) {
     }
     public Dimention direction(Dimention end) {
         return new Dimention(end.x - x, end.y - y, end.z - z, end.w - w);
+    }
+    public boolean isCloser(Dimention other) {
+        return distanceSquared() < other.distanceSquared();
     }
     public boolean isVisible() {
         return z > 0;

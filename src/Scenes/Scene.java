@@ -1,7 +1,7 @@
 package Scenes;
 
-import Entities.Mesh;
 import Entities.Eye;
+import Entities.Mesh;
 
 import java.util.ArrayList;
 

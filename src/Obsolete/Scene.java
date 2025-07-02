@@ -1,14 +1,14 @@
-package Scenes;
+package Obsolete;
 
+import Obsolete.Mesh;
 import Entities.Eye;
-import Entities.Mesh4D;
 
 import java.util.ArrayList;
 
-public abstract class Scene4D {
-    protected final ArrayList<Mesh4D> shapes;
+public abstract class Scene {
+    protected final ArrayList<Mesh> shapes;
     private final Eye eye;
-    public Scene4D() {
+    public Scene() {
         shapes = new ArrayList<>();
         eye = new Eye();
     }
@@ -16,7 +16,7 @@ public abstract class Scene4D {
         return eye;
     }
 
-    public ArrayList<Mesh4D> getShapes() {
+    public ArrayList<Mesh> getShapes() {
         return shapes;
     }
 }

@@ -2,19 +2,19 @@ package Controls;
 
 import Data.Dimention;
 import Entities.Entity;
-import Entities.Mesh4D;
-import Scenes.Scene4D;
+import Entities.Mesh;
+import Scenes.Scene;
 import Visuals.Frame;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
 public class Control {
-    private static Scene4D scene;
+    private static Scene scene;
     private static Entity focus;
     private static Frame frame;
 
-    public static void initialize(Scene4D scene) {
+    public static void initialize(Scene scene) {
         Control.scene = scene;
         focus = scene.getEye();
         frame = new Frame();
@@ -67,10 +67,10 @@ public class Control {
         }
     }
 
-    public static Scene4D getScene() {
+    public static Scene getScene() {
         return scene;
     }
-    public void add(Mesh4D shape) {
+    public void add(Mesh shape) {
         scene.getShapes().add(shape);
     }
 }
