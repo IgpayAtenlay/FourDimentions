@@ -89,31 +89,61 @@ public class ZBuffer extends JPanel {
                     }
                 }
                 if (!intersections.isEmpty()) {
-                    Dimention closestPoint;
-                    if (intersections.size() == 2) {
-                        Vector vector = Distance.closestPoint(new Vector(intersections.get(0).z(), intersections.get(0).w()), new Vector(intersections.get(1).z(), intersections.get(1).w()));
-                        closestPoint = new Dimention(x, y, vector.x(), vector.y());
-                    } else if (intersections.size() == 1) {
-                        closestPoint = intersections.get(0);
-                    } else {
-                        Dimention closest = intersections.get(0);
-                        Dimention farthest = intersections.get(0);
-                        for (Dimention current : intersections) {
-                            if (current.isCloser(closest)) {
-                                closest = current;
-                            }
-                            if (farthest.isCloser(current)) {
-                                farthest = current;
-                            }
-                        }
-                        Vector vector = Distance.closestPoint(new Vector(closest.z(), closest.w()), new Vector(farthest.z(), farthest.w()));
-                        closestPoint = new Dimention(x, y, vector.x(), vector.y());
-                    }
+                    Dimention closestPoint = closestPoint(intersections);
                     if (zBuffer[x][y] == null || closestPoint.isCloser(zBuffer[x][y])) {
                         zBuffer[x][y] = closestPoint;
                     }
                 }
             }
+        }
+    }
+//    private Dimention closestPoint(ArrayList<Dimention> intersections) {
+//        // version favoring closeness on w axis
+//        if (intersections.size() == 2) {
+//            return Distance.closestW(intersections.get(0), intersections.get(1));
+//        } else if (intersections.size() == 1) {
+//            return intersections.get(0);
+//        } else {
+//            Dimention closest = intersections.get(0);
+//            Dimention farthest = intersections.get(0);
+//            for (Dimention current : intersections) {
+//                if (current.isCloserW(closest)) {
+//                    closest = current;
+//                }
+//                if (farthest.isCloserW(current)) {
+//                    farthest = current;
+//                }
+//            }
+//            return Distance.closestW(closest, farthest);
+//        }
+//    }
+    private Dimention closestPoint(ArrayList<Dimention> intersections) {
+        // version favoring overall closeness
+        if (intersections.size() == 0) {
+            System.out.println("error - no intersections");
+            return null;
+        } else if (intersections.size() == 1) {
+            return intersections.get(0);
+        } else if (intersections.size() == 2) {
+            Vector vector = Distance.closestPoint(new Vector(intersections.get(0).z(), intersections.get(0).w()), new Vector(intersections.get(1).z(), intersections.get(1).w()));
+            if (intersections.get(0).z() < intersections.get(1).z() - 1 && intersections.get(0).w() - 1 > intersections.get(1).w()) {
+                System.out.println(intersections);
+                System.out.println(vector);
+            }
+            return new Dimention(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
+        } else {
+            Dimention closest = intersections.get(0);
+            Dimention farthest = intersections.get(0);
+            for (Dimention current : intersections) {
+                if (current.isCloser(closest)) {
+                    closest = current;
+                }
+                if (farthest.isCloser(current)) {
+                    farthest = current;
+                }
+            }
+            Vector vector = Distance.closestPoint(new Vector(closest.z(), closest.w()), new Vector(farthest.z(), farthest.w()));
+            return new Dimention(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
         }
     }
     private Dimention rasterizeTriangle(Dimention cornerOne, Dimention cornerTwo, Dimention cornerThree, int x, int y) {

@@ -25,7 +25,22 @@ public record Dimention(double x, double y, double z, double w) {
         return new Dimention(end.x - x, end.y - y, end.z - z, end.w - w);
     }
     public boolean isCloser(Dimention other) {
-        return distanceSquared() < other.distanceSquared();
+        double distance = distanceSquared();
+        double otherDistance = other.distanceSquared();
+        if (distance == otherDistance) {
+            return Math.abs(w) < Math.abs(other.w);
+        } else {
+            return distance < otherDistance;
+        }
+    }
+    public boolean isCloserW(Dimention other) {
+        if (Math.abs(w) < Math.abs(other.w)) {
+            return true;
+        } else if (Math.abs(w) > Math.abs(other.w)) {
+            return false;
+        } else {
+            return isCloser(other);
+        }
     }
     public boolean isVisible() {
         return z > 0;

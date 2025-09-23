@@ -8,7 +8,7 @@ public record Vector(double x, double y) {
         return new Vector(x - vector.x, y - vector.y);
     }
     public double dotProduct(Vector vector)  {
-        return x * vector.y + y * vector.y;
+        return x * vector.x + y * vector.y;
     }
     public Vector multipy(Double num) {
         return new Vector(x * num, y * num);
