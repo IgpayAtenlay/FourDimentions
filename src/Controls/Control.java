@@ -54,22 +54,22 @@ public class Control {
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD4)) {
                 // turn left
-                focus.turn(Settings.getxTurn(), RotationDirections.XZ);
+                focus.turn(Settings.getXZTurn(), RotationDirections.XZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD6)) {
-                focus.turn(Settings.getxTurn() * -1, RotationDirections.XZ);
+                focus.turn(Settings.getXZTurn() * -1, RotationDirections.XZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD8)) {
-                focus.turn(Settings.getyTurn(), RotationDirections.YZ);
+                focus.turn(Settings.getYZTurn(), RotationDirections.YZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD2)) {
-                focus.turn(Settings.getyTurn() * -1, RotationDirections.YZ);
+                focus.turn(Settings.getYZTurn() * -1, RotationDirections.YZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD7)) {
-                focus.turn(Settings.getwTurn(), RotationDirections.WZ);
+                focus.turn(Settings.getWZTurn(), RotationDirections.WZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD9)) {
-                focus.turn(Settings.getwTurn() * -1, RotationDirections.WZ);
+                focus.turn(Settings.getWZTurn() * -1, RotationDirections.WZ);
             }
         }
     }
