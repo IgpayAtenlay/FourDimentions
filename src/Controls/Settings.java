@@ -6,12 +6,13 @@ public class Settings {
     private static double solidRange = 50;
     private static double blurRange = 6000;
     private static double gradientRange = 200;
-    private static int horizontalSpeed = 50;
-    private static int forwardsSpeed = 50;
-    private static int anaSpeed = 50;
-    private static double xzTurn = 0.05;
-    private static double yzTurn = 0.05;
-    private static double wzTurn = 0.05;
+    private static int horizontalSpeed = 100;
+    private static int verticalSpeed = 100;
+    private static int forwardsSpeed = 100;
+    private static int anaSpeed = 100;
+    private static double yawSpeed = 0.05;
+    private static double pitchSpeed = 0.05;
+    private static double fourDRotateSpeed = 0.05;
     private static Color background = Color.WHITE;
 
     public static double getSolidRange() {
@@ -27,6 +28,9 @@ public class Settings {
     public static int getHorizontalSpeed() {
         return horizontalSpeed;
     }
+    public static int getVerticalSpeed() {
+        return verticalSpeed;
+    }
     public static int getForwardsSpeed() {
         return forwardsSpeed;
     }
@@ -34,14 +38,14 @@ public class Settings {
         return anaSpeed;
     }
 
-    public static double getXZTurn() {
-        return xzTurn;
+    public static double getYawSpeed() {
+        return yawSpeed;
     }
-    public static double getYZTurn() {
-        return yzTurn;
+    public static double getPitchSpeed() {
+        return pitchSpeed;
     }
-    public static double getWZTurn() {
-        return wzTurn;
+    public static double getFourDRotateSpeed() {
+        return fourDRotateSpeed;
     }
 
     public static Color getBackground() {

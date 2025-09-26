@@ -28,11 +28,11 @@ public class Eye extends Entity {
         return dimention;
     }
     public Dimention intrinsicRotation(Dimention dimention) {
-        return Dimention.fromMatrix(yawMatrix(true).mult(pitchMatrix(true)).mult(fourDRotateMatrix(true)).mult(dimention.getMatrix()));
+        return Dimention.fromMatrix(yawMatrix(true).mult(fourDRotateMatrix(true)).mult(pitchMatrix(true)).mult(dimention.getMatrix()));
     }
     public Dimention extrinsicRotation(Dimention dimention, boolean accountForPitch) {
         if (accountForPitch) {
-            return Dimention.fromMatrix(fourDRotateMatrix(false).mult(pitchMatrix(false)).mult(yawMatrix(false)).mult(dimention.getMatrix()));
+            return Dimention.fromMatrix(pitchMatrix(false).mult(fourDRotateMatrix(false)).mult(yawMatrix(false)).mult(dimention.getMatrix()));
         } else {
             return Dimention.fromMatrix(fourDRotateMatrix(false).mult(yawMatrix(false)).mult(dimention.getMatrix()));
         }
@@ -94,6 +94,5 @@ public class Eye extends Entity {
     }
     public void turn(double degree, RotationDirection direction) {
         this.direction = this.direction.protectedRotate(degree, direction);
-        System.out.println(this.direction);
     }
 }

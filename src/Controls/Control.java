@@ -43,10 +43,10 @@ public class Control {
                 ((Eye) focus).move(Settings.getHorizontalSpeed(), FacingDirection.LEFT_RIGHT);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_I)) {
-                ((Eye) focus).move(Settings.getForwardsSpeed(), new Dimention(0, 1, 0, 0));
+                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimention(0, 1, 0, 0));
             }
             if (Keys.isKeyPressed(KeyEvent.VK_K)) {
-                ((Eye) focus).move(Settings.getForwardsSpeed(), new Dimention(0, -1, 0, 0));
+                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimention(0, -1, 0, 0));
             }
             if (Keys.isKeyPressed(KeyEvent.VK_J)) {
                 ((Eye) focus).move(Settings.getAnaSpeed() * -1, FacingDirection.ANA_KATA);
@@ -55,22 +55,22 @@ public class Control {
                 ((Eye) focus).move(Settings.getAnaSpeed(), FacingDirection.ANA_KATA);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD4)) {
-                focus.turn(Settings.getXZTurn(), RotationDirection.YAW);
+                focus.turn(Settings.getYawSpeed(), RotationDirection.YAW);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD6)) {
-                focus.turn(Settings.getXZTurn() * -1, RotationDirection.YAW);
+                focus.turn(Settings.getYawSpeed() * -1, RotationDirection.YAW);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD8)) {
-                focus.turn(Settings.getYZTurn(), RotationDirection.PITCH);
+                focus.turn(Settings.getPitchSpeed(), RotationDirection.PITCH);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD2)) {
-                focus.turn(Settings.getYZTurn() * -1, RotationDirection.PITCH);
+                focus.turn(Settings.getPitchSpeed() * -1, RotationDirection.PITCH);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD7)) {
-                focus.turn(Settings.getWZTurn(), RotationDirection.FOUR_D_ROTATE);
+                focus.turn(Settings.getFourDRotateSpeed(), RotationDirection.FOUR_D_ROTATE);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD9)) {
-                focus.turn(Settings.getWZTurn() * -1, RotationDirection.FOUR_D_ROTATE);
+                focus.turn(Settings.getFourDRotateSpeed() * -1, RotationDirection.FOUR_D_ROTATE);
             }
         }
     }
