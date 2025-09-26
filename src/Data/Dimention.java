@@ -8,7 +8,7 @@ public record Dimention(double x, double y, double z, double w) {
         return x*x + y*y + z*z + w*w;
     }
     public double distance(Dimention dimention) {
-        return new Dimention(this.x - dimention.x, this.y - dimention.y, this.z - dimention.z, this.w - dimention.w).distance();
+        return subtract(dimention).distance();
     }
     public Dimention move(double distance, Dimention direction) {
         return new Dimention(
@@ -44,5 +44,13 @@ public record Dimention(double x, double y, double z, double w) {
     }
     public boolean isVisible() {
         return z > 0;
+    }
+
+    // matrix equations
+    public Dimention add(Dimention dimention) {
+        return new Dimention(this.x + dimention.x, this.y + dimention.y, this.z + dimention.z, this.w + dimention.w);
+    }
+    public Dimention subtract(Dimention dimention) {
+        return new Dimention(this.x - dimention.x, this.y - dimention.y, this.z - dimention.z, this.w - dimention.w);
     }
 }

@@ -20,7 +20,6 @@ public class Tesseract extends Mesh {
                 }
             }
         }
-        System.out.println(dimentions.size());
 
         // generate all cubes
         ArrayList<Cube> cubes = new ArrayList<>();
@@ -47,9 +46,7 @@ public class Tesseract extends Mesh {
 
         for (Cube cube : cubes) {
             addRectangularPrism(cube.dimentions[0], cube.dimentions[1], cube.dimentions[2], cube.dimentions[3]);
-            System.out.println(cube);
         }
-        System.out.println(cubes.size());
     }
     private class Cube {
         private Dimention[] dimentions;

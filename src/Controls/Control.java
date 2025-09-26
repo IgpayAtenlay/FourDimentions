@@ -1,6 +1,7 @@
 package Controls;
 
 import Data.Dimention;
+import Data.RotationDirections;
 import Entities.Entity;
 import Entities.Mesh;
 import Scenes.Scene;
@@ -53,16 +54,22 @@ public class Control {
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD4)) {
                 // turn left
-                focus.turn(Settings.getxTurn(), new Dimention(-1, 0, 0, 0));
+                focus.turn(Settings.getxTurn(), RotationDirections.XZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD6)) {
-                focus.turn(Settings.getxTurn(), new Dimention(1, 0, 0, 0));
+                focus.turn(Settings.getxTurn() * -1, RotationDirections.XZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD8)) {
-                focus.turn(Settings.getyTurn(), new Dimention(0, 1, 0, 0));
+                focus.turn(Settings.getyTurn(), RotationDirections.YZ);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD2)) {
-                focus.turn(Settings.getyTurn(), new Dimention(0, -1, 0, 0));
+                focus.turn(Settings.getyTurn() * -1, RotationDirections.YZ);
+            }
+            if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD7)) {
+                focus.turn(Settings.getwTurn(), RotationDirections.WZ);
+            }
+            if (Keys.isKeyPressed(KeyEvent.VK_NUMPAD9)) {
+                focus.turn(Settings.getwTurn() * -1, RotationDirections.WZ);
             }
         }
     }

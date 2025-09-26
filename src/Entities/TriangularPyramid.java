@@ -1,6 +1,7 @@
 package Entities;
 
 import Data.Dimention;
+import Data.RotationDirections;
 
 public class TriangularPyramid extends Entity {
     public Dimention cornerOne;
@@ -25,7 +26,7 @@ public class TriangularPyramid extends Entity {
         cornerFour = cornerFour.move(distance, direction);
     }
     @Override
-    public void turn(double degree, Dimention direction) {
+    public void turn(double degree, RotationDirections direction) {
     }
     public Triangle[] getTriangles() {
         return triangles;

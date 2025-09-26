@@ -9,7 +9,7 @@ public class Settings {
     private static int horizontalSpeed = 50;
     private static int forwardsSpeed = 50;
     private static int anaSpeed = 50;
-    private static double xTurn = 0.02;
+    private static double xTurn = 0.05;
     private static double yTurn = 0.02;
     private static double zTurn = 0.05;
     private static double wTurn = 0.01;
