@@ -1,4 +1,4 @@
-# FourDimentions
+# 4D Simulation
 
 A Java application that visualizes 4D geometry by projecting it onto 2D and rendering it in real time. Move and rotate a first-person camera through 4D space and explore how a tesseract looks when rotated in the fourth dimension.
 
@@ -27,21 +27,9 @@ A Java application that visualizes 4D geometry by projecting it onto 2D and rend
 - **Java** (JDK 17+ recommended; uses `record` and switch expressions)
 - **EJML** (Efficient Java Matrix Library) 0.44.0 for 4D rotation matrices
 
-### Maven dependency
-
-```xml
-<dependency>
-    <groupId>org.ejml</groupId>
-    <artifactId>ejml-all</artifactId>
-    <version>0.44.0</version>
-</dependency>
-```
-
-The project is set up as an IntelliJ IDEA module and uses the `ejml.all` library (Maven: `org.ejml:ejml-all:0.44.0`).
-
 ## Running the project
 
-1. **IntelliJ IDEA**: Open the project, ensure the EJML library is attached, then run `Main.main()`.
+Use your IDE's run configuration.
 
 The default scene is a tesseract. The app runs fullscreen; use your OS shortcut (e.g. Alt+F4) to close.
 
@@ -58,4 +46,12 @@ The default scene is a tesseract. The app runs fullscreen; use your OS shortcut 
 
 ## License
 
-This project is provided as-is for educational and personal use.
+Released under MIT License
+
+Copyright (c) 2026 Melissa Cron.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
