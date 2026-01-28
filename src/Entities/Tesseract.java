@@ -1,21 +1,21 @@
 package Entities;
 
-import Data.Dimention;
+import Data.Dimension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Tesseract extends Mesh {
-    public Tesseract(Dimention start, int sideLength) {
+    public Tesseract(Dimension start, int sideLength) {
         super();
 
         // generate all vertices
-        ArrayList<Dimention> dimentions = new ArrayList<>();
+        ArrayList<Dimension> dimensions = new ArrayList<>();
         for (double x : new double[]{start.x(), start.x() + sideLength}) {
             for (double y : new double[]{start.y(), start.y() + sideLength}) {
                 for (double z : new double[]{start.z(), start.z() + sideLength}) {
                     for (double w : new double[]{start.w(), start.w() + sideLength}) {
-                        dimentions.add(new Dimention(x, y, z, w));
+                        dimensions.add(new Dimension(x, y, z, w));
                     }
                 }
             }
@@ -23,11 +23,11 @@ public class Tesseract extends Mesh {
 
         // generate all cubes
         ArrayList<Cube> cubes = new ArrayList<>();
-        for (int i = 0; i < dimentions.size(); i++) {
-            for (int j = i + 1; j < dimentions.size(); j++) {
-                for (int k = j + 1; k < dimentions.size(); k++) {
-                    for (int l = k + 1; l < dimentions.size(); l++) {
-                        Cube cube = createWithTesting(dimentions.get(i), dimentions.get(j), dimentions.get(k), dimentions.get(l));
+        for (int i = 0; i < dimensions.size(); i++) {
+            for (int j = i + 1; j < dimensions.size(); j++) {
+                for (int k = j + 1; k < dimensions.size(); k++) {
+                    for (int l = k + 1; l < dimensions.size(); l++) {
+                        Cube cube = createWithTesting(dimensions.get(i), dimensions.get(j), dimensions.get(k), dimensions.get(l));
                         if (cube != null) {
                             boolean sameCube = false;
                             for (Cube cube1 : cubes) {
@@ -45,29 +45,29 @@ public class Tesseract extends Mesh {
         }
 
         for (Cube cube : cubes) {
-            addRectangularPrism(cube.dimentions[0], cube.dimentions[1], cube.dimentions[2], cube.dimentions[3]);
+            addRectangularPrism(cube.dimensions[0], cube.dimensions[1], cube.dimensions[2], cube.dimensions[3]);
         }
     }
     private class Cube {
-        private Dimention[] dimentions;
-        private Dimention min;
-        private Dimention max;
-        private Cube(Dimention... corners) {
-            dimentions = corners;
-            Dimention min = dimentions[0];
-            Dimention max = dimentions[0];
-            for (Dimention dimention : dimentions) {
-                min = new Dimention(
-                        Math.min(min.x(), dimention.x()),
-                        Math.min(min.y(), dimention.y()),
-                        Math.min(min.z(), dimention.z()),
-                        Math.min(min.w(), dimention.w())
+        private Dimension[] dimensions;
+        private Dimension min;
+        private Dimension max;
+        private Cube(Dimension... corners) {
+            dimensions = corners;
+            Dimension min = dimensions[0];
+            Dimension max = dimensions[0];
+            for (Dimension dimension : dimensions) {
+                min = new Dimension(
+                        Math.min(min.x(), dimension.x()),
+                        Math.min(min.y(), dimension.y()),
+                        Math.min(min.z(), dimension.z()),
+                        Math.min(min.w(), dimension.w())
                 );
-                max = new Dimention(
-                        Math.max(max.x(), dimention.x()),
-                        Math.max(max.y(), dimention.y()),
-                        Math.max(max.z(), dimention.z()),
-                        Math.max(max.w(), dimention.w())
+                max = new Dimension(
+                        Math.max(max.x(), dimension.x()),
+                        Math.max(max.y(), dimension.y()),
+                        Math.max(max.z(), dimension.z()),
+                        Math.max(max.w(), dimension.w())
                 );
                 this.min = min;
                 this.max = max;
@@ -78,21 +78,21 @@ public class Tesseract extends Mesh {
             return min.equals(cube.min) && max.equals(cube.max);
         }
         public String toString() {
-            return Arrays.toString(dimentions);
+            return Arrays.toString(dimensions);
         }
     }
-    private Cube createWithTesting(Dimention... dimentions) {
-        if (dimentions.length != 4) {
+    private Cube createWithTesting(Dimension... dimensions) {
+        if (dimensions.length != 4) {
             return null;
         }
 
         int middle = 0;
         int middleIndex = 0;
-        for (int i = 0; i < dimentions.length; i++) {
+        for (int i = 0; i < dimensions.length; i++) {
             int edges = 0;
-            for (int j = 0; j < dimentions.length; j++) {
+            for (int j = 0; j < dimensions.length; j++) {
                 if (i != j) {
-                    if (threeCoordsMatching(dimentions[i], dimentions[j])) {
+                    if (threeCoordsMatching(dimensions[i], dimensions[j])) {
                         edges++;
                     }
                 }
@@ -107,13 +107,13 @@ public class Tesseract extends Mesh {
             return null;
         }
 
-        Dimention temp = dimentions[middleIndex];
-        dimentions[middleIndex] = dimentions[0];
-        dimentions[0] = temp;
+        Dimension temp = dimensions[middleIndex];
+        dimensions[middleIndex] = dimensions[0];
+        dimensions[0] = temp;
 
-        return new Cube(dimentions[0], dimentions[1], dimentions[2], dimentions[3]);
+        return new Cube(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
-    private static boolean threeCoordsMatching(Dimention one, Dimention two) {
+    private static boolean threeCoordsMatching(Dimension one, Dimension two) {
         int numSharedAspects = 0;
         if (one.x() == two.x()) {
             numSharedAspects++;

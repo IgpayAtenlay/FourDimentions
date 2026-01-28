@@ -1,13 +1,13 @@
 package Entities;
 
-import Data.Dimention;
+import Data.Dimension;
 
 public class Cube extends Mesh {
-    public Cube(Dimention start, int sideLength) {
+    public Cube(Dimension start, int sideLength) {
         super();
-        Dimention one = start.move(sideLength, new Dimention(1, 0,0 , 0));
-        Dimention two = start.move(sideLength, new Dimention(0, 1, 0, 0));
-        Dimention three = start.move(sideLength, new Dimention(0, 0, 0, 1));
+        Dimension one = start.move(sideLength, new Dimension(1, 0,0 , 0));
+        Dimension two = start.move(sideLength, new Dimension(0, 1, 0, 0));
+        Dimension three = start.move(sideLength, new Dimension(0, 0, 0, 1));
 
         addRectangularPrism(start, one, two, three);
     }

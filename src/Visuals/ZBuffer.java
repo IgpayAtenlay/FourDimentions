@@ -2,7 +2,7 @@ package Visuals;
 
 import Controls.Control;
 import Controls.Settings;
-import Data.Dimention;
+import Data.Dimension;
 import Entities.Mesh;
 import Entities.TriangularPyramid;
 import Util.ColorValues;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class ZBuffer extends JPanel {
     private static int CROSSHAIR_LENGTH = 12;
-    private Dimention[][] zBuffer;
+    private Dimension[][] zBuffer;
     private BufferedImage image;
 
     public ZBuffer() {
@@ -26,7 +26,7 @@ public class ZBuffer extends JPanel {
     }
 
     private void clearZBuffer() {
-        zBuffer = new Dimention[Math.max(1, getWidth())][Math.max(1, getHeight())];
+        zBuffer = new Dimension[Math.max(1, getWidth())][Math.max(1, getHeight())];
     }
     private void updateZBuffer() {
         clearZBuffer();
@@ -62,7 +62,7 @@ public class ZBuffer extends JPanel {
     }
 
     private void rasterizeTriangularPyramid(TriangularPyramid triangularPyramid) {
-        Dimention[] corners = new Dimention[] {
+        Dimension[] corners = new Dimension[] {
                 modifyCoordinates(triangularPyramid.cornerOne),
                 modifyCoordinates(triangularPyramid.cornerTwo),
                 modifyCoordinates(triangularPyramid.cornerThree),
@@ -77,11 +77,11 @@ public class ZBuffer extends JPanel {
 
         for (int x = minX; x <= maxX; x++) {
             for (int y = minY; y <= maxY; y++) {
-                ArrayList<Dimention> intersections = new ArrayList<>();
+                ArrayList<Dimension> intersections = new ArrayList<>();
                 for (int cornerOne = 0; cornerOne < 2; cornerOne++) {
                     for (int cornerTwo = cornerOne + 1; cornerTwo < 3; cornerTwo++) {
                         for (int cornerThree = cornerTwo + 1; cornerThree < 4; cornerThree++) {
-                            Dimention intersection = rasterizeTriangle(corners[cornerOne], corners[cornerTwo], corners[cornerThree], x, y);
+                            Dimension intersection = rasterizeTriangle(corners[cornerOne], corners[cornerTwo], corners[cornerThree], x, y);
                             if (intersection != null) {
                                 intersections.add(intersection);
                             }
@@ -89,7 +89,7 @@ public class ZBuffer extends JPanel {
                     }
                 }
                 if (!intersections.isEmpty()) {
-                    Dimention closestPoint = closestPoint(intersections);
+                    Dimension closestPoint = closestPoint(intersections);
                     if (zBuffer[x][y] == null || closestPoint.isCloser(zBuffer[x][y])) {
                         zBuffer[x][y] = closestPoint;
                     }
@@ -97,16 +97,16 @@ public class ZBuffer extends JPanel {
             }
         }
     }
-//    private Dimention closestPoint(ArrayList<Dimention> intersections) {
+//    private Dimension closestPoint(ArrayList<Dimension> intersections) {
 //        // version favoring closeness on w axis
 //        if (intersections.size() == 2) {
 //            return Distance.closestW(intersections.get(0), intersections.get(1));
 //        } else if (intersections.size() == 1) {
 //            return intersections.get(0);
 //        } else {
-//            Dimention closest = intersections.get(0);
-//            Dimention farthest = intersections.get(0);
-//            for (Dimention current : intersections) {
+//            Dimension closest = intersections.get(0);
+//            Dimension farthest = intersections.get(0);
+//            for (Dimension current : intersections) {
 //                if (current.isCloserW(closest)) {
 //                    closest = current;
 //                }
@@ -117,7 +117,7 @@ public class ZBuffer extends JPanel {
 //            return Distance.closestW(closest, farthest);
 //        }
 //    }
-    private Dimention closestPoint(ArrayList<Dimention> intersections) {
+    private Dimension closestPoint(ArrayList<Dimension> intersections) {
         // version favoring overall closeness
         if (intersections.size() == 0) {
             System.out.println("error - no intersections");
@@ -126,11 +126,11 @@ public class ZBuffer extends JPanel {
             return intersections.get(0);
         } else if (intersections.size() == 2) {
             Vector vector = Distance.closestPoint(new Vector(intersections.get(0).z(), intersections.get(0).w()), new Vector(intersections.get(1).z(), intersections.get(1).w()));
-            return new Dimention(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
+            return new Dimension(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
         } else {
-            Dimention closest = intersections.get(0);
-            Dimention farthest = intersections.get(0);
-            for (Dimention current : intersections) {
+            Dimension closest = intersections.get(0);
+            Dimension farthest = intersections.get(0);
+            for (Dimension current : intersections) {
                 if (current.isCloser(closest)) {
                     closest = current;
                 }
@@ -139,10 +139,10 @@ public class ZBuffer extends JPanel {
                 }
             }
             Vector vector = Distance.closestPoint(new Vector(closest.z(), closest.w()), new Vector(farthest.z(), farthest.w()));
-            return new Dimention(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
+            return new Dimension(intersections.get(0).x(), intersections.get(0).y(), vector.x(), vector.y());
         }
     }
-    private Dimention rasterizeTriangle(Dimention cornerOne, Dimention cornerTwo, Dimention cornerThree, int x, int y) {
+    private Dimension rasterizeTriangle(Dimension cornerOne, Dimension cornerTwo, Dimension cornerThree, int x, int y) {
         double[] bary = baryCoords(x, y, cornerOne, cornerTwo, cornerThree);
         double u = bary[0];
         double v = bary[1];
@@ -153,13 +153,13 @@ public class ZBuffer extends JPanel {
             double z = u * cornerOne.z() + v * cornerTwo.z() + baryW * cornerThree.z();
             if (z > 0) {
                 double w = u * cornerOne.w() + v * cornerTwo.w() + baryW * cornerThree.w();
-                return new Dimention(x, y, z, w);
+                return new Dimension(x, y, z, w);
             }
         }
         return null;
     }
     // Compute barycentric coordinates
-    private double[] baryCoords(int pointX, int pointY, Dimention one, Dimention two, Dimention three) {
+    private double[] baryCoords(int pointX, int pointY, Dimension one, Dimension two, Dimension three) {
         double determinant = ((two.y() - three.y()) * (one.x() - three.x()) + (three.x() - two.x()) * (one.y() - three.y()));
         if (determinant == 0) {
             return new double[]{-1, -1, -1};
@@ -185,14 +185,14 @@ public class ZBuffer extends JPanel {
         repaint();
     }
 
-    public Dimention modifyCoordinates(Dimention dimention) {
-        Dimention result = Control.getScene().getEye().modifyCoordinates(dimention);
-        return new Dimention(result.x() + (double) getWidth() / 2, result.y() * -1 + (double) getHeight() / 2, result.z(), result.w());
+    public Dimension modifyCoordinates(Dimension dimension) {
+        Dimension result = Control.getScene().getEye().modifyCoordinates(dimension);
+        return new Dimension(result.x() + (double) getWidth() / 2, result.y() * -1 + (double) getHeight() / 2, result.z(), result.w());
     }
-    private Color getColor(Dimention dimention) {
-        double absW = Math.abs(dimention.w());
-        double absZ = Math.abs(dimention.z());
-        boolean pos = dimention.w() >= 0;
+    private Color getColor(Dimension dimension) {
+        double absW = Math.abs(dimension.w());
+        double absZ = Math.abs(dimension.z());
+        boolean pos = dimension.w() >= 0;
         double distance = Math.sqrt(absZ * absZ + absW * absW);
 
         int totalBlur = 0;

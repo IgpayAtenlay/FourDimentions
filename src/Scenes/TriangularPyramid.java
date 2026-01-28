@@ -1,10 +1,10 @@
 package Scenes;
 
-import Data.Dimention;
+import Data.Dimension;
 
 public class TriangularPyramid extends Scene {
     public TriangularPyramid() {
         super();
-        shapes.add(new Entities.TriangularPyramidMesh(new Dimention(-500, 500, 2000, 500),500));
+        shapes.add(new Entities.TriangularPyramidMesh(new Dimension(-500, 500, 2000, 500),500));
     }
 }

@@ -1,6 +1,6 @@
 package Controls;
 
-import Data.Dimention;
+import Data.Dimension;
 import Data.FacingDirection;
 import Data.RotationDirection;
 import Entities.Entity;
@@ -43,10 +43,10 @@ public class Control {
                 ((Eye) focus).move(Settings.getHorizontalSpeed(), FacingDirection.LEFT_RIGHT);
             }
             if (Keys.isKeyPressed(KeyEvent.VK_I)) {
-                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimention(0, 1, 0, 0));
+                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimension(0, 1, 0, 0));
             }
             if (Keys.isKeyPressed(KeyEvent.VK_K)) {
-                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimention(0, -1, 0, 0));
+                ((Eye) focus).move(Settings.getVerticalSpeed(), new Dimension(0, -1, 0, 0));
             }
             if (Keys.isKeyPressed(KeyEvent.VK_J)) {
                 ((Eye) focus).move(Settings.getAnaSpeed() * -1, FacingDirection.ANA_KATA);

@@ -1,16 +1,16 @@
 package Entities;
 
-import Data.Dimention;
+import Data.Dimension;
 import Data.RotationDirection;
 
 public class TriangularPyramid extends Entity {
-    public Dimention cornerOne;
-    public Dimention cornerTwo;
-    public Dimention cornerThree;
-    public Dimention cornerFour;
+    public Dimension cornerOne;
+    public Dimension cornerTwo;
+    public Dimension cornerThree;
+    public Dimension cornerFour;
     public Triangle[] triangles;
 
-    public TriangularPyramid(Dimention cornerOne, Dimention cornerTwo, Dimention cornerThree, Dimention cornerFour) {
+    public TriangularPyramid(Dimension cornerOne, Dimension cornerTwo, Dimension cornerThree, Dimension cornerFour) {
         this.cornerOne = cornerOne;
         this.cornerTwo = cornerTwo;
         this.cornerThree = cornerThree;
@@ -19,7 +19,7 @@ public class TriangularPyramid extends Entity {
         updateTriangles();
     }
 
-    public void move(int distance, Dimention direction) {
+    public void move(int distance, Dimension direction) {
         cornerOne = cornerOne.move(distance, direction);
         cornerTwo = cornerTwo.move(distance, direction);
         cornerThree = cornerThree.move(distance, direction);

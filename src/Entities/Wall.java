@@ -1,34 +1,34 @@
 package Entities;
 
-import Data.Dimention;
+import Data.Dimension;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Wall extends Mesh {
-    public Wall(Dimention start, double xLength, double yLength, double zLength, double wLength) {
+    public Wall(Dimension start, double xLength, double yLength, double zLength, double wLength) {
         super();
 
         // generate all vertices
-        ArrayList<Dimention> dimentions = new ArrayList<>();
+        ArrayList<Dimension> dimensions = new ArrayList<>();
         for (double x : new double[]{start.x(), start.x() + xLength}) {
             for (double y : new double[]{start.y(), start.y() + yLength}) {
                 for (double z : new double[]{start.z(), start.z() + zLength}) {
                     for (double w : new double[]{start.w(), start.w() + wLength}) {
-                        dimentions.add(new Dimention(x, y, z, w));
+                        dimensions.add(new Dimension(x, y, z, w));
                     }
                 }
             }
         }
-        System.out.println(dimentions.size());
+        System.out.println(dimensions.size());
 
         // generate all cubes
         ArrayList<RectangularPrism> rectangularPrisms = new ArrayList<>();
-        for (int i = 0; i < dimentions.size(); i++) {
-            for (int j = i + 1; j < dimentions.size(); j++) {
-                for (int k = j + 1; k < dimentions.size(); k++) {
-                    for (int l = k + 1; l < dimentions.size(); l++) {
-                        RectangularPrism rectangularPrism = createWithTesting(dimentions.get(i), dimentions.get(j), dimentions.get(k), dimentions.get(l));
+        for (int i = 0; i < dimensions.size(); i++) {
+            for (int j = i + 1; j < dimensions.size(); j++) {
+                for (int k = j + 1; k < dimensions.size(); k++) {
+                    for (int l = k + 1; l < dimensions.size(); l++) {
+                        RectangularPrism rectangularPrism = createWithTesting(dimensions.get(i), dimensions.get(j), dimensions.get(k), dimensions.get(l));
                         if (rectangularPrism != null) {
                             boolean sameCube = false;
                             for (RectangularPrism rectangularPrism1 : rectangularPrisms) {
@@ -46,31 +46,31 @@ public class Wall extends Mesh {
         }
 
         for (RectangularPrism rectangularPrism : rectangularPrisms) {
-            addRectangularPrism(rectangularPrism.dimentions[0], rectangularPrism.dimentions[1], rectangularPrism.dimentions[2], rectangularPrism.dimentions[3]);
+            addRectangularPrism(rectangularPrism.dimensions[0], rectangularPrism.dimensions[1], rectangularPrism.dimensions[2], rectangularPrism.dimensions[3]);
             System.out.println(rectangularPrism);
         }
         System.out.println(rectangularPrisms.size());
     }
     private class RectangularPrism {
-        private Dimention[] dimentions;
-        private Dimention min;
-        private Dimention max;
-        private RectangularPrism(Dimention... corners) {
-            dimentions = corners;
-            Dimention min = dimentions[0];
-            Dimention max = dimentions[0];
-            for (Dimention dimention : dimentions) {
-                min = new Dimention(
-                        Math.min(min.x(), dimention.x()),
-                        Math.min(min.y(), dimention.y()),
-                        Math.min(min.z(), dimention.z()),
-                        Math.min(min.w(), dimention.w())
+        private Dimension[] dimensions;
+        private Dimension min;
+        private Dimension max;
+        private RectangularPrism(Dimension... corners) {
+            dimensions = corners;
+            Dimension min = dimensions[0];
+            Dimension max = dimensions[0];
+            for (Dimension dimension : dimensions) {
+                min = new Dimension(
+                        Math.min(min.x(), dimension.x()),
+                        Math.min(min.y(), dimension.y()),
+                        Math.min(min.z(), dimension.z()),
+                        Math.min(min.w(), dimension.w())
                 );
-                max = new Dimention(
-                        Math.max(max.x(), dimention.x()),
-                        Math.max(max.y(), dimention.y()),
-                        Math.max(max.z(), dimention.z()),
-                        Math.max(max.w(), dimention.w())
+                max = new Dimension(
+                        Math.max(max.x(), dimension.x()),
+                        Math.max(max.y(), dimension.y()),
+                        Math.max(max.z(), dimension.z()),
+                        Math.max(max.w(), dimension.w())
                 );
                 this.min = min;
                 this.max = max;
@@ -81,21 +81,21 @@ public class Wall extends Mesh {
             return min.equals(rectangularPrism.min) && max.equals(rectangularPrism.max);
         }
         public String toString() {
-            return Arrays.toString(dimentions);
+            return Arrays.toString(dimensions);
         }
     }
-    private RectangularPrism createWithTesting(Dimention... dimentions) {
-        if (dimentions.length != 4) {
+    private RectangularPrism createWithTesting(Dimension... dimensions) {
+        if (dimensions.length != 4) {
             return null;
         }
 
         int middle = 0;
         int middleIndex = 0;
-        for (int i = 0; i < dimentions.length; i++) {
+        for (int i = 0; i < dimensions.length; i++) {
             int edges = 0;
-            for (int j = 0; j < dimentions.length; j++) {
+            for (int j = 0; j < dimensions.length; j++) {
                 if (i != j) {
-                    if (threeCoordsMatching(dimentions[i], dimentions[j])) {
+                    if (threeCoordsMatching(dimensions[i], dimensions[j])) {
                         edges++;
                     }
                 }
@@ -110,13 +110,13 @@ public class Wall extends Mesh {
             return null;
         }
 
-        Dimention temp = dimentions[middleIndex];
-        dimentions[middleIndex] = dimentions[0];
-        dimentions[0] = temp;
+        Dimension temp = dimensions[middleIndex];
+        dimensions[middleIndex] = dimensions[0];
+        dimensions[0] = temp;
 
-        return new RectangularPrism(dimentions[0], dimentions[1], dimentions[2], dimentions[3]);
+        return new RectangularPrism(dimensions[0], dimensions[1], dimensions[2], dimensions[3]);
     }
-    private static boolean threeCoordsMatching(Dimention one, Dimention two) {
+    private static boolean threeCoordsMatching(Dimension one, Dimension two) {
         int numSharedAspects = 0;
         if (one.x() == two.x()) {
             numSharedAspects++;

@@ -1,6 +1,6 @@
 package Util;
 
-import Data.Dimention;
+import Data.Dimension;
 
 public class Distance {
     public static Vector closestPoint(Vector a, Vector b) {
@@ -19,9 +19,9 @@ public class Distance {
             return a.add(ab.multipy(distance));
         }
     }
-    public static Dimention closestW(Dimention a, Dimention b) {
+    public static Dimension closestW(Dimension a, Dimension b) {
         if (a.w() < 0 && b.w() > 0 || a.w() > 0 && b.w() < 0) {
-            return new Dimention(a.x(), a.y(), a.z() + a.w() * (b.z() - a.z()) / (a.w() - b.w()), 0);
+            return new Dimension(a.x(), a.y(), a.z() + a.w() * (b.z() - a.z()) / (a.w() - b.w()), 0);
         } else if (Math.abs(a.w()) == Math.abs(b.w())) {
             if (a.z() < b.z()) {
                 return a;

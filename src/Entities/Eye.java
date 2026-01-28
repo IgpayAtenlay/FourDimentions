@@ -1,40 +1,40 @@
 package Entities;
 
-import Data.Dimention;
+import Data.Dimension;
 import Data.FacingDirection;
 import Data.Rotation;
 import Data.RotationDirection;
 import org.ejml.simple.SimpleMatrix;
 
 public class Eye extends Entity {
-    private Dimention location;
+    private Dimension location;
     private Rotation direction;
-    private Dimention displayRelativePosition;
+    private Dimension displayRelativePosition;
     public Eye() {
-        location = new Dimention(0, 0, 0, 0);
+        location = new Dimension(0, 0, 0, 0);
         direction = new Rotation(0.5, 0, 0);
-        displayRelativePosition = new Dimention(0, 0, 700, 0);
+        displayRelativePosition = new Dimension(0, 0, 700, 0);
     }
-    public Dimention modifyCoordinates(Dimention dimention) {
+    public Dimension modifyCoordinates(Dimension dimension) {
         // move camera to 0,0,0,0
-        dimention = dimention.subtract(location);
+        dimension = dimension.subtract(location);
 
         // rotate
-        dimention = intrinsicRotation(dimention);
+        dimension = intrinsicRotation(dimension);
 
         // account for display
-        dimention = accountForDisplay(dimention);
+        dimension = accountForDisplay(dimension);
 
-        return dimention;
+        return dimension;
     }
-    public Dimention intrinsicRotation(Dimention dimention) {
-        return Dimention.fromMatrix(yawMatrix(true).mult(fourDRotateMatrix(true)).mult(pitchMatrix(true)).mult(dimention.getMatrix()));
+    public Dimension intrinsicRotation(Dimension dimension) {
+        return Dimension.fromMatrix(yawMatrix(true).mult(fourDRotateMatrix(true)).mult(pitchMatrix(true)).mult(dimension.getMatrix()));
     }
-    public Dimention extrinsicRotation(Dimention dimention, boolean accountForPitch) {
+    public Dimension extrinsicRotation(Dimension dimension, boolean accountForPitch) {
         if (accountForPitch) {
-            return Dimention.fromMatrix(pitchMatrix(false).mult(fourDRotateMatrix(false)).mult(yawMatrix(false)).mult(dimention.getMatrix()));
+            return Dimension.fromMatrix(pitchMatrix(false).mult(fourDRotateMatrix(false)).mult(yawMatrix(false)).mult(dimension.getMatrix()));
         } else {
-            return Dimention.fromMatrix(fourDRotateMatrix(false).mult(yawMatrix(false)).mult(dimention.getMatrix()));
+            return Dimension.fromMatrix(fourDRotateMatrix(false).mult(yawMatrix(false)).mult(dimension.getMatrix()));
         }
     }
     private SimpleMatrix yawMatrix(boolean intrinsic) {
@@ -73,23 +73,23 @@ public class Eye extends Entity {
                 }
         );
     }
-    public Dimention accountForDisplay(Dimention dimention) {
-        double displayZ = displayRelativePosition.z() / dimention.z();
-        return new Dimention(
-                displayZ * dimention.x() + displayRelativePosition.x(),
-                displayZ * dimention.y() + displayRelativePosition.y(),
-                dimention.z(),
-                dimention.w()
+    public Dimension accountForDisplay(Dimension dimension) {
+        double displayZ = displayRelativePosition.z() / dimension.z();
+        return new Dimension(
+                displayZ * dimension.x() + displayRelativePosition.x(),
+                displayZ * dimension.y() + displayRelativePosition.y(),
+                dimension.z(),
+                dimension.w()
         );
     }
-    public void move(int distance, Dimention direction) {
+    public void move(int distance, Dimension direction) {
         location = location.move(distance, direction);
     }
     public void move(int distance, FacingDirection direction) {
         switch (direction) {
-            case FORWARD_BACK -> move(distance, extrinsicRotation(new Dimention(0, 0, 100, 0), false));
-            case LEFT_RIGHT -> move(distance, extrinsicRotation(new Dimention(100, 0, 0, 0), false));
-            case ANA_KATA -> move(distance, extrinsicRotation(new Dimention(0, 0, 0, 100), false));
+            case FORWARD_BACK -> move(distance, extrinsicRotation(new Dimension(0, 0, 100, 0), false));
+            case LEFT_RIGHT -> move(distance, extrinsicRotation(new Dimension(100, 0, 0, 0), false));
+            case ANA_KATA -> move(distance, extrinsicRotation(new Dimension(0, 0, 0, 100), false));
         }
     }
     public void turn(double degree, RotationDirection direction) {

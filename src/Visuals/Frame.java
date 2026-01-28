@@ -10,7 +10,7 @@ import java.awt.event.KeyEvent;
 public class Frame extends JFrame {
     public ZBuffer panel;
     public Frame() {
-        super("Four Dimentions");
+        super("Four Dimensions");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(600, 600);
         panel = new ZBuffer();
